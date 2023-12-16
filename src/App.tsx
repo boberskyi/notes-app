@@ -3,6 +3,20 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Container from 'react-bootstrap/esm/Container'
 import {NewNote} from "./NewNote.tsx";
 
+export type Note = {
+    id: string
+} & NoteData
+
+export type NoteData = {
+    title: string,
+    markdown: string,
+    tags: Tag[]
+}
+
+export type Tag = {
+    id: string,
+    label: string
+}
 export const App = () => {
     return (
         <Container className={'my-4'}>
