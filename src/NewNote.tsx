@@ -1,10 +1,14 @@
 import {NoteForm} from "./NoteForm.tsx";
+import {NoteData} from "./App.tsx";
 
-export const NewNote = () => {
+type NewNoteProps = {
+    onSubmit: (data:NoteData) => void
+}
+export const NewNote = ({onSubmit}: NewNoteProps) => {
     return (
         <>
             <h1 className={'mb-4'}>New note</h1>
-            <NoteForm/>
+            <NoteForm onSubmit={onSubmit} />
         </>
     )
 };
