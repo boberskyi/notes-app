@@ -3,11 +3,14 @@ import CreatableSelect from "react-select/creatable";
 import {Link} from "react-router-dom";
 import {FormEvent, useRef, useState} from "react";
 import {NoteData, Tag} from "./App.tsx";
+import { v1 } from "uuid";
 
 type NoteFormType = {
     onSubmit: (data: NoteData) => void
+    onAddTag: (tag:Tag) => void
+    availableTags: Tag[]
 }
-export const NoteForm = ({onSubmit}: NoteFormType) => {
+export const NoteForm = ({onSubmit, onAddTag, availableTags}: NoteFormType) => {
     const titleRef = useRef<HTMLInputElement>(null);
     const markdownRef = useRef<HTMLTextAreaElement>(null);
     const [selectedTags, setSelectedTags] = useState<Tag[]>();
@@ -36,7 +39,15 @@ export const NoteForm = ({onSubmit}: NoteFormType) => {
                         <Form.Group controlId={"tags"}>
                             <Form.Label>Tags</Form.Label>
                             <CreatableSelect
+                                onCreateOption={label => {
+                                    const newTag = {id: v1(), label};
+                                    onAddTag(newTag);
+                                    setSelectedTags(prev => [...(prev ?? []), newTag]);
+                                }}
                                 value={selectedTags?.map(tag => {
+                                    return {label: tag.label, value: tag.id}
+                                })}
+                                options={availableTags.map(tag => {
                                     return {label: tag.label, value: tag.id}
                                 })}
                                 onChange={tags => {
