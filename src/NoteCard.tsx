@@ -1,15 +1,17 @@
-import Card from "react-bootstrap/esm/Card";
-import {Tag} from "./App.tsx";
-import {Link} from "react-router-dom";
-import styles from "./Notelist.module.css";
-import {Badge, Stack} from "react-bootstrap";
+import React from 'react';
+import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
+import { Tag } from './App.tsx';
+import { Badge, Stack } from 'react-bootstrap';
+import styles from './Notelist.module.css';
 
 type NoteCardProps = {
-    id: string
-    title: string
-    tags: Tag[]
-}
-export const NoteCard = ({id, title, tags}: NoteCardProps) => {
+    id: string;
+    title: string;
+    tags: Tag[];
+};
+
+export const NoteCard: React.FC<NoteCardProps> = ({ id, title, tags }) => {
     return (
         <Card as={Link} to={`/${id}`} className={`h-100 text-reset text-decoration-none ${styles.card}`}>
             <Card.Body>
@@ -17,8 +19,10 @@ export const NoteCard = ({id, title, tags}: NoteCardProps) => {
                     <span className={'fs-5'}>{title}</span>
                     {tags.length > 0 && (
                         <Stack gap={1} direction="horizontal" className="justify-content-center flex-wrap">
-                            {tags.map(tag => (
-                                <Badge className={'text-truncate'} key={tag.id}>{tag.label}</Badge>
+                            {tags.map((tag) => (
+                                <Badge className={'text-truncate'} key={tag.id}>
+                                    {tag.label}
+                                </Badge>
                             ))}
                         </Stack>
                     )}

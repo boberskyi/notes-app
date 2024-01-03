@@ -1,17 +1,18 @@
-import {Note} from "./App.tsx";
-import {Navigate, Outlet, useOutletContext, useParams} from "react-router-dom";
+import React from 'react';
+import { Navigate, Outlet, useOutletContext, useParams } from 'react-router-dom';
+import { Note } from './App.tsx';
 
 type NoteLayoutProps = {
-    notes: Note[]
-}
-export const NoteLayout = ({notes} :NoteLayoutProps) => {
-    const {id} = useParams();
-    const note = notes.find(n => n.id === id);
+    notes: Note[];
+};
 
-    if (note == null) return <Navigate to="/" replace />
-    return <Outlet context={note} />
+export const NoteLayout: React.FC<NoteLayoutProps> = ({ notes }: NoteLayoutProps) => {
+    const { id } = useParams();
+    const note = notes.find((n) => n.id === id);
+
+    return note ? <Outlet context={note} /> : <Navigate to="/" replace />;
 };
 
 export const useNote = () => {
     return useOutletContext<Note>();
-}
+};
